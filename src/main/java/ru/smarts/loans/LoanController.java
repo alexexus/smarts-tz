@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import java.util.Date;
 
 @Controller
@@ -31,10 +32,11 @@ public class LoanController {
     }
 
     @PostMapping("/addLoan")
-    public String addLoan(Loan loan, BindingResult result, Model model) {
+    public String addLoan(@Valid Loan loan, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "loans/add-loan";
         }
+        checkClientAndCredit(loan);
         repository.save(loan);
         return "redirect:/loans/index";
     }
@@ -61,7 +63,7 @@ public class LoanController {
             loan.setId(id);
             return "loans/update-loan";
         }
-
+        checkClientAndCredit(loan);
         repository.save(loan);
         return "redirect:/loans/index";
     }
@@ -91,5 +93,17 @@ public class LoanController {
         service.setTotalSum(0.0);
 
         return "loans/calcs";
+    }
+
+    private void checkClientAndCredit(Loan loan) {
+        if (loan.getClient() == null) {
+            throw new IllegalArgumentException("Invalid client Id");
+        }
+        if (loan.getCredit() == null) {
+            throw new IllegalArgumentException("Invalid credit Id");
+        }
+        if (loan.getSumOfCredit() > loan.getCredit().getLimit()) {
+            throw new ValidationException("Sum of credit > limit of credit");
+        }
     }
 }

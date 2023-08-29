@@ -29,7 +29,7 @@ public class CreditController {
     }
 
     @PostMapping("/addCredit")
-    public String addCredit(Credit credit, BindingResult result, Model model) {
+    public String addCredit(@Valid Credit credit, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "credits/add-credit";
         }

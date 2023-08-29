@@ -5,8 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.util.Date;
 
 
@@ -15,16 +13,9 @@ import java.util.Date;
 @ToString
 public class Calculation {
 
-    @Min(value = 10000, message = "Min sum 10 000 RUB")
     private int creditAmount; // Сумма кредита
-
-    @Min(value = 1, message = "Min percent rate 1%")
     private double percentRate; // Процентная ставка
-
-    @Min(value = 1, message = "Min credit term 1 month")
-    @Max(value = 360, message = "Max credit term 360 months")
     private int creditTerm; // Срок кредитования
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date currentDate; // Дата выдачи кредита
     private double monthlyPaymentAmount;  // Сумма ежемесячного платежа

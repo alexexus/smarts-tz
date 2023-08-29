@@ -1,6 +1,6 @@
 <form action="#"
       th:action="@{/loans/update/{id}(id=${loan.id})}"
-      th:object="${loans}"
+      th:object="${loan}"
       method="post" xmlns:th="http://www.w3.org/1999/xhtml">
 
     <label for="client">Client</label>

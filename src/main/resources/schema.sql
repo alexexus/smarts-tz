@@ -65,6 +65,9 @@ INSERT INTO CLIENTS (fio, phone, email, passport) VALUES ('Petrov Petr Petrovich
 INSERT INTO CREDITS (limit, percent) VALUES (1000000, 10);
 INSERT INTO CREDITS (limit, percent) VALUES (2000000, 8);
 INSERT INTO BANKS (id) VALUES (0);
+INSERT INTO BANKS (id) VALUES (1);
 INSERT INTO BANKS_CLIENTS (bank_id, client_id) VALUES (0, 0);
+INSERT INTO BANKS_CLIENTS (bank_id, client_id) VALUES (1, 1);
 INSERT INTO BANKS_CREDITS (bank_id, credit_id) VALUES (0, 0);
+INSERT INTO BANKS_CREDITS (bank_id, credit_id) VALUES (1, 1);
 INSERT INTO LOANS (client_id, credit_id, sum_of_credit) VALUES (0, 0, 500000);

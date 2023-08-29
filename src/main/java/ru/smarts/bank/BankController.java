@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.smarts.client.ClientRepository;
-import ru.smarts.credit.CreditRepository;
+import ru.smarts.client.Client;
+import ru.smarts.credit.Credit;
 
 import javax.validation.Valid;
 
@@ -19,8 +19,6 @@ import javax.validation.Valid;
 public class BankController {
 
     private final BankRepository repository;
-    private final CreditRepository creditRepository;
-    private final ClientRepository clientRepository;
 
     @GetMapping
     public String showIndex() {
@@ -37,6 +35,7 @@ public class BankController {
         if (result.hasErrors()) {
             return "banks/add-bank";
         }
+        checkClientsAndCredits(bank);
         repository.save(bank);
         return "redirect:/banks/index";
     }
@@ -63,7 +62,7 @@ public class BankController {
             bank.setId(id);
             return "banks/update-bank";
         }
-
+        checkClientsAndCredits(bank);
         repository.save(bank);
         return "redirect:/banks/index";
     }
@@ -74,5 +73,18 @@ public class BankController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid bank Id:" + id));
         repository.deleteById(id);
         return "redirect:/banks/index";
+    }
+
+    private void checkClientsAndCredits(Bank bank) {
+        for (Client c : bank.getClients()) {
+            if (c == null) {
+                throw new IllegalArgumentException("Invalid client Id");
+            }
+        }
+        for (Credit c : bank.getCredits()) {
+            if (c == null) {
+                throw new IllegalArgumentException("Invalid credit Id");
+            }
+        }
     }
 }

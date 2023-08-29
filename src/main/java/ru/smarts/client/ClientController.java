@@ -29,7 +29,7 @@ public class ClientController {
     }
 
     @PostMapping("/addClient")
-    public String addClient(Client client, BindingResult result, Model model) {
+    public String addClient(@Valid Client client, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "clients/add-client";
         }
