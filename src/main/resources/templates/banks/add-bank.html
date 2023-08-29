@@ -1,0 +1,12 @@
+<form action="#" th:action="@{/banks/addBank}" th:object="${bank}" method="post" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <label for="clients">Clients</label>
+    <input type="text" th:field="*{clients}" id="clients" placeholder="Clients">
+    <span th:if="${#fields.hasErrors('clients')}" th:errors="*{clients}"></span>
+
+    <label for="credits">Credits</label>
+    <input type="text" th:field="*{credits}" id="credits" placeholder="Credits">
+    <span th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"></span>
+
+    <input type="submit" value="Add Bank">
+</form>

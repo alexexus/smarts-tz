@@ -1,0 +1,52 @@
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid black;
+        vertical-align: center;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    input {
+        background: #008EB0; /* Синий цвет фона */
+        border: none; /* Убираем рамку */
+        display: inline;
+    }
+
+    form {
+        white-space: nowrap;
+        display: inline;
+    }
+</style>
+
+<div th:switch="${credits}" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h2 th:case="null">No credits yet!</h2>
+    <div th:case="*">
+        <h2>Credits</h2>
+        <table style="width:100%">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Limit</th>
+                <th>Percent</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="credit : ${credits}">
+                <td th:text="${credit.id}"></td>
+                <td th:text="${credit.limit}"></td>
+                <td th:text="${credit.percent}"></td>
+                <td><a th:href="@{/credits/edit/{id}(id=${credit.id})}">Edit</a></td>
+                <td><a th:href="@{/credits/delete/{id}(id=${credit.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/credits/signup">Add a new credit</a></p>
+</div>
+<p><a href="/">Main Menu</a></p>

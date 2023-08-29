@@ -1,0 +1,12 @@
+<form action="#" th:action="@{/credits/addCredit}" th:object="${credit}" method="post" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <label for="limit">Limit</label>
+    <input type="number" th:field="*{limit}" id="limit" placeholder="Limit">
+    <span th:if="${#fields.hasErrors('limit')}" th:errors="*{limit}"></span>
+
+    <label for="percent">Percent</label>
+    <input type="number" th:field="*{percent}" id="percent" placeholder="Percent">
+    <span th:if="${#fields.hasErrors('percent')}" th:errors="*{percent}"></span>
+
+    <input type="submit" value="Add Credit">
+</form>

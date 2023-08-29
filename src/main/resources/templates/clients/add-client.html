@@ -1,0 +1,20 @@
+<form action="#" th:action="@{/clients/addClient}" th:object="${client}" method="post" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <label for="fio">FIO</label>
+    <input type="text" th:field="*{fio}" id="fio" placeholder="FIO">
+    <span th:if="${#fields.hasErrors('fio')}" th:errors="*{fio}"></span>
+
+    <label for="phone">Phone</label>
+    <input type="text" th:field="*{phone}" id="phone" placeholder="Phone">
+    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+
+    <label for="email">Email</label>
+    <input type="text" th:field="*{email}" id="email" placeholder="Email">
+    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+
+    <label for="passport">Passport</label>
+    <input type="text" th:field="*{passport}" id="passport" placeholder="Passport">
+    <span th:if="${#fields.hasErrors('passport')}" th:errors="*{passport}"></span>
+
+    <input type="submit" value="Add Client">
+</form>

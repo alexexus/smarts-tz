@@ -1,0 +1,19 @@
+<form action="#"
+      th:action="@{/loans/update/{id}(id=${loan.id})}"
+      th:object="${loans}"
+      method="post" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <label for="client">Client</label>
+    <input type="text" th:field="*{client}" id="client" placeholder="Client">
+    <span th:if="${#fields.hasErrors('client')}" th:errors="*{client}"></span>
+
+    <label for="credit">Credit</label>
+    <input type="text" th:field="*{credit}" id="credit" placeholder="Credit">
+    <span th:if="${#fields.hasErrors('credit')}" th:errors="*{credit}"></span>
+
+    <label for="sumOfCredit">SumOfCredit</label>
+    <input type="text" th:field="*{sumOfCredit}" id="sumOfCredit" placeholder="SumOfCredit">
+    <span th:if="${#fields.hasErrors('sumOfCredit')}" th:errors="*{sumOfCredit}"></span>
+
+    <input type="submit" value="Update Loan">
+</form>

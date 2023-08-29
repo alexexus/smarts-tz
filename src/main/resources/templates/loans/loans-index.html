@@ -1,0 +1,56 @@
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid black;
+        vertical-align: center;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    input {
+        background: #008EB0; /* Синий цвет фона */
+        border: none; /* Убираем рамку */
+        display: inline;
+    }
+
+    form {
+        white-space: nowrap;
+        display: inline;
+    }
+</style>
+
+<div th:switch="${loans}" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h2 th:case="null">No loans yet!</h2>
+    <div th:case="*">
+        <h2>Loans</h2>
+        <table style="width:100%">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Client</th>
+                <th>Credit</th>
+                <th>SumOfCredit</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>Calculate</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="loan : ${loans}">
+                <td th:text="${loan.id}"></td>
+                <td th:text="${loan.client}"></td>
+                <td th:text="${loan.credit}"></td>
+                <td th:text="${loan.sumOfCredit}"></td>
+                <td><a th:href="@{/loans/edit/{id}(id=${loan.id})}">Edit</a></td>
+                <td><a th:href="@{/loans/delete/{id}(id=${loan.id})}">Delete</a></td>
+                <td><a th:href="@{/loans/calculations/{id}(id=${loan.id})}">Calculate</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/loans/signup">Add a new loan</a></p>
+</div>
+<p><a href="/">Main Menu</a></p>
