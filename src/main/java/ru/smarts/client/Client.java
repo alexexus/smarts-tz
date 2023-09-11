@@ -28,7 +28,7 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotBlank
-    @Pattern(regexp = "[a-zA-Zа-яА-Я]+", message = "Может содержать только буквы")
+    @Pattern(regexp = "[\\sa-zA-Zа-яА-Я]+", message = "Может содержать только буквы")
     private String fio;
     @NotBlank
     @Pattern(regexp = "(^$|[0-9]{10})", message = "Номер телефона должен содержать 10 цифр")
