@@ -29,7 +29,6 @@
         <table style="width:100%">
             <thead>
             <tr>
-                <th>Id</th>
                 <th>Limit</th>
                 <th>Percent</th>
                 <th>Edit</th>
@@ -38,7 +37,6 @@
             </thead>
             <tbody>
             <tr th:each="credit : ${credits}">
-                <td th:text="${credit.id}"></td>
                 <td th:text="${credit.limit}"></td>
                 <td th:text="${credit.percent}"></td>
                 <td><a th:href="@{/credits/edit/{id}(id=${credit.id})}">Edit</a></td>

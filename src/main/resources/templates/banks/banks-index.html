@@ -29,7 +29,6 @@
         <table style="width:100%">
             <thead>
             <tr>
-                <th>Id</th>
                 <th>Clients</th>
                 <th>Credits</th>
                 <th>Edit</th>
@@ -38,17 +37,8 @@
             </thead>
             <tbody>
             <tr th:each="bank : ${banks}">
-                <td th:text="${bank.id}"></td>
                 <td th:text="${bank.clients}"></td>
                 <td th:text="${bank.credits}"></td>
-<!--                <th>Clients:</th>-->
-<!--                <td th:each="client : ${bank.clients}">-->
-<!--                    <ol th:text="${client.id}"></ol>-->
-<!--                </td>-->
-<!--                <th>Credits:</th>-->
-<!--                <td th:each="credit : ${bank.credits}">-->
-<!--                    <ol th:text="${credit.id}"></ol>-->
-<!--                </td>-->
                 <td><a th:href="@{/banks/edit/{id}(id=${bank.id})}">Edit</a></td>
                 <td><a th:href="@{/banks/delete/{id}(id=${bank.id})}">Delete</a></td>
             </tr>

@@ -9,9 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.smarts.client.Client;
+import ru.smarts.client.ClientRepository;
 import ru.smarts.credit.Credit;
+import ru.smarts.credit.CreditRepository;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/banks")
@@ -19,6 +24,9 @@ import javax.validation.Valid;
 public class BankController {
 
     private final BankRepository repository;
+    private final BankMapper bankMapper;
+    private final ClientRepository clientRepository;
+    private final CreditRepository creditRepository;
 
     @GetMapping
     public String showIndex() {
@@ -26,12 +34,19 @@ public class BankController {
     }
 
     @GetMapping("/signup")
-    public String showSignUpForm(Bank bank) {
+    public String showSignUpForm(Bank bank, Model model) {
+        model.addAttribute("clients", clientRepository.findAll());
+        model.addAttribute("credits", creditRepository.findAll());
         return "banks/add-bank";
     }
 
     @PostMapping("/addBank")
     public String addBank(Bank bank, BindingResult result, Model model) {
+        model.addAttribute("clients", clientRepository.findAll());
+        model.addAttribute("credits", creditRepository.findAll());
+        bank.setClients(clientRepository.findByIdIn(Collections.singleton(bank.getClient().getId())));
+        bank.setCredits(creditRepository.findByIdIn(Collections.singleton(bank.getCredit().getId())));
+
         if (result.hasErrors()) {
             return "banks/add-bank";
         }
@@ -42,7 +57,8 @@ public class BankController {
 
     @GetMapping("/index")
     public String showBanksList(Model model) {
-        model.addAttribute("banks", repository.findAll());
+        List<BankDto> banks = repository.findAll().stream().map(bankMapper::toBankDto).collect(Collectors.toList());
+        model.addAttribute("banks", banks);
         return "banks/banks-index";
     }
 
@@ -50,7 +66,8 @@ public class BankController {
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
         Bank bank = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid bank Id:" + id));
-
+        model.addAttribute("clients", clientRepository.findAll());
+        model.addAttribute("credits", creditRepository.findAll());
         model.addAttribute("bank", bank);
         return "banks/update-bank";
     }
@@ -58,6 +75,10 @@ public class BankController {
     @PostMapping("/update/{id}")
     public String updateBank(@PathVariable("id") long id, @Valid Bank bank,
                              BindingResult result, Model model) {
+        model.addAttribute("clients", clientRepository.findAll());
+        model.addAttribute("credits", creditRepository.findAll());
+        bank.setClients(clientRepository.findByIdIn(Collections.singleton(bank.getClient().getId())));
+        bank.setCredits(creditRepository.findByIdIn(Collections.singleton(bank.getCredit().getId())));
         if (result.hasErrors()) {
             bank.setId(id);
             return "banks/update-bank";

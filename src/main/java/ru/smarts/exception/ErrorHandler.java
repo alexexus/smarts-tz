@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 @Slf4j
 @RestControllerAdvice
 public class ErrorHandler {
@@ -24,12 +26,18 @@ public class ErrorHandler {
         return new ErrorResponse(e.getMessage());
     }
 
-    @ExceptionHandler({ConstraintViolationException.class, ConflictException.class,
-            DataIntegrityViolationException.class})
+    @ExceptionHandler({ConstraintViolationException.class, ConflictException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handleConstraintViolationException(final RuntimeException e) {
         log.error("Получен статус 409 Conflict {}", e.getMessage(), e);
         return new ErrorResponse(e.getMessage());
+    }
+
+    @ExceptionHandler({DataIntegrityViolationException.class})
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleDataIntegrityViolationException(final DataIntegrityViolationException e) {
+        log.error("Получен статус 409 Conflict {}", e.getMessage(), e);
+        return new ErrorResponse("Нарушение ограничений базы данных (уникальность или существуют связи с другими объектами");
     }
 
     @ExceptionHandler

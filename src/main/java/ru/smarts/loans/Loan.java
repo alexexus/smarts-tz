@@ -11,9 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 
 @Data
 @Entity
@@ -34,6 +34,11 @@ public class Loan {
     @JoinColumn(name = "credit_id")
     private Credit credit;
 
-    @Positive
-    private long sumOfCredit;
+    @Min(1)
+    @Max(value = 2_000_000_000, message = "Должно быть не больше 2 млрд.")
+    private double sumOfCredit;
+
+    @Min(1)
+    @Max(360)
+    private double creditTermInMonths;
 }

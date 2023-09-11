@@ -1,16 +1,29 @@
-<form action="#" th:action="@{/loans/addLoan}" th:object="${loan}" method="post" xmlns:th="http://www.w3.org/1999/xhtml">
+<form action="#" th:action="@{/loans/addLoan}" th:object="${loan}" method="post"
+      xmlns:th="http://www.w3.org/1999/xhtml">
 
-    <label for="client">Client</label>
-    <input type="text" th:field="*{client}" id="client" placeholder="Client">
-    <span th:if="${#fields.hasErrors('client')}" th:errors="*{client}"></span>
+    <label for="client">Client email: </label>
+    <select id="client" name="client" class="form-control">
+        <option th:each="client : ${clients}"
+                th:value="${client.id}"
+                th:text="${client.email}"
+                th:selected="${loan.client == client}"></option>
+    </select>
 
-    <label for="credit">Credit</label>
-    <input type="text" th:field="*{credit}" id="credit" placeholder="Credit">
-    <span th:if="${#fields.hasErrors('credit')}" th:errors="*{credit}"></span>
+    <label for="credit">Credit percent: </label>
+    <select id="credit" name="credit" class="form-control">
+        <option th:each="credit : ${credits}"
+                th:value="${credit.id}"
+                th:text="${credit.percent}"
+                th:selected="${loan.credit == credit}"></option>
+    </select>
 
-    <label for="sumOfCredit">SumOfCredit</label>
+    <label for="sumOfCredit">Sum of credit</label>
     <input type="text" th:field="*{sumOfCredit}" id="sumOfCredit" placeholder="SumOfCredit">
     <span th:if="${#fields.hasErrors('sumOfCredit')}" th:errors="*{sumOfCredit}"></span>
+
+    <label for="creditTermInMonths">Credit term in months</label>
+    <input type="text" th:field="*{creditTermInMonths}" id="creditTermInMonths" placeholder="CreditTermInMonths">
+    <span th:if="${#fields.hasErrors('creditTermInMonths')}" th:errors="*{creditTermInMonths}"></span>
 
     <input type="submit" value="Add Loan">
 </form>

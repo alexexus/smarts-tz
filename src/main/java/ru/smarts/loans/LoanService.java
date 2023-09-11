@@ -60,7 +60,7 @@ public class LoanService {
             }
 
             overPayment += monthlyPercent;
-            overPaymentPercent = calculation.getCreditAmount() / overPayment;
+            overPaymentPercent = overPayment * 100 / calculation.getCreditAmount();
             totalSum = calculation.getCreditAmount() + overPayment;
 
             Calculation newCalculation = new Calculation(getDateOfNextPayment(calculation, i),

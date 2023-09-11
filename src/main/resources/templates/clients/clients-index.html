@@ -29,7 +29,6 @@
         <table style="width:100%">
             <thead>
             <tr>
-                <th>Id</th>
                 <th>FIO</th>
                 <th>Phone</th>
                 <th>Email</th>
@@ -40,7 +39,6 @@
             </thead>
             <tbody>
             <tr th:each="client : ${clients}">
-                <td th:text="${client.id}"></td>
                 <td th:text="${client.fio}"></td>
                 <td th:text="${client.phone}"></td>
                 <td th:text="${client.email}"></td>

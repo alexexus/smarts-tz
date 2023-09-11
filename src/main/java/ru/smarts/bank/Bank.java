@@ -1,6 +1,9 @@
 package ru.smarts.bank;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.smarts.client.Client;
 import ru.smarts.credit.Credit;
 
@@ -12,12 +15,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Transient;
 import java.util.Set;
 
 @Data
 @Entity
+@Builder
 @Table(name = "banks")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Bank {
 
     @Id
@@ -35,4 +41,9 @@ public class Bank {
             joinColumns = @JoinColumn(name = "bank_id"),
             inverseJoinColumns = @JoinColumn(name = "credit_id"))
     private Set<Credit> credits;
+
+    @Transient
+    private Client client;
+    @Transient
+    private Credit credit;
 }

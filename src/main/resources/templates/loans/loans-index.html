@@ -29,10 +29,10 @@
         <table style="width:100%">
             <thead>
             <tr>
-                <th>Id</th>
                 <th>Client</th>
                 <th>Credit</th>
                 <th>SumOfCredit</th>
+                <th>CreditTermInMonths</th>
                 <th>Edit</th>
                 <th>Delete</th>
                 <th>Calculate</th>
@@ -40,10 +40,10 @@
             </thead>
             <tbody>
             <tr th:each="loan : ${loans}">
-                <td th:text="${loan.id}"></td>
                 <td th:text="${loan.client}"></td>
                 <td th:text="${loan.credit}"></td>
                 <td th:text="${loan.sumOfCredit}"></td>
+                <td th:text="${loan.creditTermInMonths}"></td>
                 <td><a th:href="@{/loans/edit/{id}(id=${loan.id})}">Edit</a></td>
                 <td><a th:href="@{/loans/delete/{id}(id=${loan.id})}">Delete</a></td>
                 <td><a th:href="@{/loans/calculations/{id}(id=${loan.id})}">Calculate</a></td>
